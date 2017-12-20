@@ -1,164 +1,35 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<script src="js/d3.js"></script>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-<script
-src="https://code.jquery.com/jquery-3.2.1.min.js"
-integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-crossorigin="anonymous"></script>
-<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/geojson2svg/1.2.2/geojson2svg.min.js"></script>
-<style type="text/css">
-/* color:
-    color: rgba(0, 0, 0, 0.68); */
+    <title>2014 District Gerrymandering</title>
+    <meta charset="utf-8">
 
+    <!-- d3 source and libraries -->
+    <script src="js/d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/geojson2svg/1.2.2/geojson2svg.min.js"></script>
+    <script src="https://d3js.org/d3-array.v1.min.js"></script>
+    <script src="https://d3js.org/d3-geo.v1.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <!-- d3 tooltip library -->
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
-path:hover {
-	fill-opacity: .7;
-}
-
-div.tooltip {
- 	position: absolute;
-	text-align: center;
-	width: 60px;
-	height: 28px;
-	padding: 2px;
-	font: 12px sans-serif;
-	background: white;
-	border: 0px;
-	border-radius: 8px;
-	pointer-events: none;
-}
-
-body {
-	font: 11px sans-serif;
-	background: linear-gradient(to bottom, #f9f9f9 0%, #ffffff 50%);
-	background-repeat: no-repeat;
-}
-
-.center {
-    text-align:center;
-}
-
-.vert-center {
-    margin-top:40px;
-    text-align: center;
-}
-
-.vert-center p {
-    line-height: 1.5;
-    color: ‎green;
-    width:100%;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-body p {
-    text-align:center;
-    font-size:15px;
-}
-
-nav {
-    padding: 20px;
-    position:fixed;
-    display:inline;
-    padding-left:20px;
-    width:130px;
-    text-align:center;
-}
-
-    nav li {
-        list-style:none;
-        padding: 10px 20px;
-        letter-spacing: 1px;
-        font-size:14px;
-    }
-
-    nav li a {
-      transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
-      text-decoration: none;
-      color: rgba(0, 0, 0, 0.68)
-    }
-
-    a:hover, a:focus {
-      color: #b49543;
-      outline: none;
-      text-decoration: none;
-    }
-
-.hidden {
-    display:none;
-}
-
-.container div {
-    right:0px;
-    padding-left:150px;
-}
-
-#dist_info {
-    right: 21px;
-    padding: 10px;
-    line-height: 19px;
-    font-size: 14px;
-    top: 121px;
-    position: absolute;
-    height: 175px;
-    background-color: #f1f3f1;
-    color: rgba(0, 0, 0, 0.68);
-    width: 300px;
-}
-
-    #topten li {
-        font-size: 10px;
-        margin-left: 24px;
-    }
-</style>
-<style>
-    .d3-tip {
-      line-height: 1;
-      font-weight: bold;
-      padding: 12px;
-      background: rgba(0, 0, 0, 0.8);
-      color: #fff;
-      border-radius: 2px;
-    }
-
-    /* Creates a small triangle extender for the tooltip */
-    .d3-tip:after {
-      box-sizing: border-box;
-      display: inline;
-      font-size: 10px;
-      width: 100%;
-      line-height: 1;
-      color: rgba(0, 0, 0, 0.8);
-      content: "\25BC";
-      position: absolute;
-      text-align: center;
-    }
-
-    /* Style northward tooltips differently */
-    .d3-tip.n:after {
-      margin: -1px 0 0 0;
-      top: 100%;
-      left: 0;
-    }
-</style>
+    <!-- Open Sans font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- General CSS sheet -->
+    <link href="css/index.css" rel="stylesheet">
 </head>
 <body>
-<h1 class="center">2014 District Gerrymandering
-</h1>
+<h1 class="center">2014 District Gerrymandering</h1>
 <p class="center">Source: United States Census Bureau</p>
 <nav>
     <li><a href="#">MAP</a></li>
     <li><a href="#">CREDITS</a></li>
     <li><a href="#">TOP TEN</a></li>
-    <div id="topten" class="hidden">
-        <li>District 2<br>Roundness:.3<br>RoundnessL:.2</li>
-        <li>District 2<br>Roundness:.3<br>RoundnessL:.2</li>
-        <li>District 2<br>Roundness:.3<br>RoundnessL:.2</li>
-    </div>
+    <ol id="topten" class="hidden"></ol>
 
 </nav>
 <div class="container">
@@ -179,133 +50,14 @@ nav {
     </div>
 </div>
 <div id="dist_info" class="hidden">
-    <div title="image"></div>
     <h1 id="title">District</h1>
+    <div id='dstct_map' height="100"></div>
     <div id="district" width="50" height="50"></div>
     <div id="info"></div>
 </div>
-<script type="text/javascript">
-    $("nav li a").click(function() {
-        var elm = $(this).parents("li").text().replace(" ", "").toLowerCase();
-
-        if (elm != "topten") {
-            $(".container div").hide();
-            $("#" + elm).fadeIn();
-        } else {
-            // top ten side list
-            if (!$("#topten").is(":visible")) {
-                if ($("#credits").is(":visible"))
-                    $("credits").fadeOut();
-                if (!$("#map").is(":visible"))
-                    $("map").fadeIn();
-                $("#topten").fadeIn();
-            } else {
-                $("#topten").fadeOut();
-            }
-        }
-    })
-</script>
-<script type="text/javascript">
-// width and height of map
-var width = 960;
-var height = 500;
-
-var state_fips;
-
-$.getJSON("data/state_fips.json", function(d) {
-    state_fips = d;
-})
-
-var projection = d3.geo.albersUsa()
-				   .translate([width/2, height/2])    // translate to center of screen
-				   .scale([900]);          // scale things down so see entire US
-
-// Define path generator
-var path = d3.geo.path()               // path generator that will convert GeoJSON to SVG paths
-		  	 .projection(projection);  // tell path generator to use albersUsa projection
-
-var color = d3.scale.linear()
-            .domain([.6, .75, .9, 1])
-            .range(["#e2e2e2", "#e2e2e2", "#123b94", "#07193e"])
-
-var svg = d3.select("#map")
-			.append("svg")
-			.attr("width", width)
-			.attr("height", height);
-
-var div = d3.select("#map")
-		    .append("div")
-    		.attr("class", "tooltip")
-    		.style("opacity", 0);
-
-d3.json("data/us_districts.geojson", function(json) {
-    var tip = d3.tip()
-      .attr('class', 'd3-tip')
-      .offset([-10, 0])
-      .html(function(d) {
-        return "<div style='margin-bottom:-7px;'><strong>Roundness:</strong> <span>" + round10(d.properties.Roundness) + "</span></div>"
-         + "<br><strong>RoundnessL:</strong> <span>" + round10(d.properties.RoundnessL) + "</span>";
-      })
-
-    svg.call(tip);
-
-    svg.selectAll("path")
-        .data(json.features)
-        .enter()
-        .append("path")
-        .attr("d", path)
-        .style("stroke", "#fff")
-        .text(function(d) { return d.Roundness; })
-        .style("stroke-width", ".5")
-        .on('mouseover', tip.show)
-        .on('mouseout', tip.hide)
-        .on('click', function(d) {
-                showElm(d);
-        })
-        .style("fill", function(d) {
-            var roundness = d.properties.Roundness;
-            var roundness_l = d.properties.RoundnessL;
-            var value = 1-roundness;
-            return color(value);
-    });
-
-    function showElm(d) {
-         var elm = $("#dist_info");
-
-         // hide panel user clicked on the same district twice
-         if (elm.is(':visible') && d.properties.OBJECTID == elm.attr('dist-id')) {
-             elm.fadeOut();
-             return;
-         }
-
-         // elements
-         var elm_info = $("#dist_info #info");
-         var elm_title = $("#dist_info #title");
-
-         // district properties
-         var id = d.properties.OBJECTID
-         var roundness = round10(d.properties.Roundness)
-         var roundness_l = round10(d.properties.RoundnessL)
-         var state = state_fips[d.properties.STATEFP]
-         var district_num = d.properties.CD114FP
-
-         // place properties in panel
-         elm.attr('dist-id', id)
-         elm_title.text(state + " " + district_num);
-         elm_info.html('Roundness: '+roundness+'<br>RoundnessL: '+roundness_l+'<br>');
-
-         // show panel
-         elm.fadeIn();
-
-         console.log(d);
-    }
-
-    // rounds to two decimal places
-    function round10(num) {
-        return Math.round(num * 100) / 100
-    }
-});
-
-</script>
 </body>
+
+<!-- main JS code -->
+<script src="js/index.js"></script>
+
 </html>

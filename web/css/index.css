@@ -1,0 +1,144 @@
+/* color:
+    color: rgba(0, 0, 0, 0.68); */
+
+
+path:hover {
+	fill-opacity: .7;
+}
+
+div.tooltip {
+ 	position: absolute;
+	text-align: center;
+	width: 60px;
+	height: 28px;
+	padding: 2px;
+	font: 12px sans-serif;
+	background: white;
+	border: 0px;
+	border-radius: 8px;
+	pointer-events: none;
+}
+
+body {
+	font: 11px sans-serif;
+	background: linear-gradient(to bottom, #f9f9f9 0%, #ffffff 50%);
+	background-repeat: no-repeat;
+}
+
+.center {
+    text-align:center;
+}
+
+.vert-center {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.vert-center p {
+    line-height: 1.5;
+    color: ‎green;
+    width:100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+body p {
+    text-align:center;
+    font-size:15px;
+}
+
+nav {
+    padding: 20px;
+    position:fixed;
+    display:inline;
+    padding-left:20px;
+    width: 213px;
+    text-align:center;
+}
+    nav li {
+        list-style:none;
+        padding: 10px 20px;
+        letter-spacing: 1px;
+        font-size:14px;
+    }
+
+    nav li a {
+      transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+      text-decoration: none;
+      color: rgba(0, 0, 0, 0.68)
+    }
+
+a:hover, a:focus {
+  color: #b49543;
+  outline: none;
+  text-decoration: none;
+}
+
+.hidden {
+    display:none;
+}
+
+.container div {
+    right:0px;
+    padding-left: 200px;
+}
+
+#dist_info {
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    padding: 28px;
+    position: fixed;
+    background-color: #f1f3f1;
+    color: rgba(0, 0, 0, 0.68);
+    width: 300px;
+    font-size: 14px;
+}
+
+    #dist_info #title {
+        margin-top: 78px;
+    }
+
+#dstct_map {
+    margin-top:10px;
+}
+
+#topten li {
+    font-size: 10px;
+    margin-left: 24px;
+    cursor: pointer;
+}
+
+    #topten li:hover {
+        background-color:rgb(12, 41, 101);
+        color: white;
+    }
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}

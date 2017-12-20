@@ -12,7 +12,6 @@ def load_url(path):
     httpd.stop()
     print("To restart web run: \n%s"%server)
 
-
 if sys.version_info[0] == 2:
     import SimpleHTTPServer, BaseHTTPServer
     import socket
